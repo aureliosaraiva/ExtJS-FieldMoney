@@ -1,6 +1,7 @@
 /*
 * @Copyright (c) 2011 Aurélio Saraiva
 * @Page http://github.com/plentz/jquery-maskmoney, http://code.google.com/p/extjs-field-money/
+* try at http://exemplos.aureliosaraiva.com/fieldmoney/exemplo.html
 
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
