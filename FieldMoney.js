@@ -192,15 +192,17 @@ Ext.define('Ext.ux.form.FieldMoney', {
 
        if(k < 48 || k > 57) {// any key except the numbers 0-9
            if(k == 45) {// -(minus) key
-               this.setValue(this._changeSign(input));
+               this.setValue(this._changeSign(input,k));
+               e.preventDefault();
                return false;
            }
            if(k == 43) {// +(plus) key
-               input.val(input.getValue().replace('-', ''));
+               e.preventDefault();
+               this.setValue(this._changeSign(input,k));
                return false;
            } else if(k == 13 || k == 9) {// enter key or tab key
                return true;
-           } else if(k == 37 || k == 39) {// left arrow key or right arrow key
+           } else if(k == 37 || k == 39 || k == 36 || k == 35) {// left arrow key, right arrow key, or HOME or END
                return true;
            } else {// any other key with keycode less than 48 and greater than 57
                e.preventDefault();
@@ -283,17 +285,21 @@ Ext.define('Ext.ux.form.FieldMoney', {
        startPos = startPos - (originalLen - newLen);
        this._setCursorPosition(startPos);
    },
-   _changeSign : function(i) {
-       if(this.allowNegative) {
-           var vic = i.getValue();
-           if(i.getValue() != '' && i.getValue().charAt(0) == '-') {
-               return i.getValue().replace('-', '');
-           } else {
-               return '-' + i.getValue();
-           }
-       } else {
-           return i.getValue();
-       }
+   _changeSign : function(i,k) {
+
+      var key = String.fromCharCode(k);
+      var value = i.getValue(); 
+      
+      if (this.allowNegative) {
+        if (key == '+') {
+          value = i.getValue().replace('-', '');
+        } else if (key == '-' && i.getValue().indexOf('-') == -1) {
+          value = '-' + i.getValue();
+        }
+      }
+
+      return value;
+
    },
    _getInputSelection : function(el) {
        var start = 0, end = 0, normalizedValue, range, textInputRange, len, endRange;
@@ -341,9 +347,9 @@ Ext.define('Ext.ux.form.FieldMoney', {
    },
    _setCursorPosition : function(pos) {
        var elem = this.inputEl;
-       if(elem.setSelectionRange) {
+       if(elem.dom.setSelectionRange) {
            elem.focus();
-           elem.setSelectionRange(pos, pos);
+           elem.dom.setSelectionRange(pos, pos);
        } else if(elem.createTextRange) {
            var range = elem.createTextRange();
            range.collapse(true);
