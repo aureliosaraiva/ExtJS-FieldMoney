@@ -22,6 +22,7 @@ The options that you can set are:
  * defaultZero: when the user enters the field, it sets a default mask using zero. default: true
  * allowZero: use this setting to prevent users from inputing zero. default: false
  * allowNegative: use this setting to prevent users from inputing negative values. default: false
+ * rightAlign: align field text to right. default: true
 
 
 ***
@@ -29,6 +30,7 @@ The options that you can set are:
 
  * [Aurélio Saraiva](http://www.aureliosaraiva.com)
  * [Diego Plentz](http://plentz.org)
+ * [Guilherme Augusto Henschel](http://www.guilhermeaugusto.com.br)
 
 
 
